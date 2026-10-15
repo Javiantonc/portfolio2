@@ -41,8 +41,20 @@ h1 em{font-style:normal;background:linear-gradient(90deg,var(--ac),var(--ac2));-
 .btn-icon{width:18px;height:18px;flex-shrink:0}
 .btn.p{background:var(--fg);color:var(--bg);border-color:var(--fg)}
 .btn:hover{transform:translateY(-3px)}
-.code{background:var(--card);border:1px solid var(--ln);border-radius:16px;padding:22px;font:13.5px/1.7 ui-monospace,Menlo,monospace;color:var(--mut);transform:perspective(900px) rotateY(-8deg) rotateX(4deg);box-shadow:0 30px 60px -30px #0006}
-.code b{color:var(--ac);font-weight:600}.code u{text-decoration:none;color:var(--ac2)}
+/* hero terminal 3D */
+.code-stage{perspective:1100px;display:grid;place-items:center;width:100%}
+.code-win{width:min(100%,480px);transform-style:preserve-3d;transition:transform .25s ease-out;animation:codeFl 6s ease-in-out infinite;background:var(--card);border:1px solid var(--ln);border-radius:16px;box-shadow:0 35px 70px -25px #0009,0 0 0 1px color-mix(in srgb,var(--ac) 25%,transparent);position:relative}
+@keyframes codeFl{0%,100%{transform:rotateY(-10deg) rotateX(6deg) translateY(0)}50%{transform:rotateY(-5deg) rotateX(2deg) translateY(-14px)}}
+.code-dots{display:flex;align-items:center;gap:7px;padding:12px 16px;border-bottom:1px solid var(--ln);background:color-mix(in srgb,var(--bg2) 65%,var(--card));border-radius:16px 16px 0 0}
+.code-dots i{width:10px;height:10px;border-radius:50%;display:inline-block}
+.code-dots i:nth-child(1){background:#ff5f56}
+.code-dots i:nth-child(2){background:#ffbd2e}
+.code-dots i:nth-child(3){background:#27c93f}
+.code-dots span{margin-left:auto;font:500 11px ui-monospace,monospace;color:var(--mut);letter-spacing:.05em}
+.code-win pre{padding:22px;font:13.5px/1.7 ui-monospace,Menlo,monospace;color:var(--mut);margin:0;overflow-x:auto}
+.code-win b{color:var(--ac);font-weight:600}
+.code-win u{text-decoration:none;color:var(--ac2)}
+.code-badge{position:absolute;bottom:-12px;right:18px;padding:6px 12px;border-radius:8px;background:var(--ac);color:#fff;font:600 12px ui-monospace,monospace;box-shadow:0 12px 25px -8px #0008;transform:translateZ(45px);pointer-events:none}
 /* about + stack */
 .about{display:grid;grid-template-columns:1fr 1fr;gap:48px}
 @media(max-width:800px){.about{grid-template-columns:1fr}}
@@ -99,7 +111,7 @@ h1 em{font-style:normal;background:linear-gradient(90deg,var(--ac),var(--ac2));-
 footer{padding:28px 0;text-align:center;color:var(--mut);font-size:13px;border-top:1px solid var(--ln)}
 .rv{opacity:0;transform:translateY(28px);transition:.8s cubic-bezier(.2,.7,.2,1)}
 .rv.on{opacity:1;transform:none}
-@media(prefers-reduced-motion:reduce){.mock{animation:none}.rv{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}}
+@media(prefers-reduced-motion:reduce){.mock,.code-win{animation:none}.rv{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}}
 </style>
 </head>
 <body>
@@ -113,7 +125,9 @@ footer{padding:28px 0;text-align:center;color:var(--mut);font-size:13px;border-t
 <p class="lead">Desarrollador web en Madrid. Creo soluciones digitales funcionales que mejoran la experiencia de las personas.</p>
 <a class="btn p" href="#proyectos">Ver proyectos →</a> <a class="btn" href="#contacto">Hablemos</a>
 </div>
-<pre class="code"><b>const</b> javier = {
+<div class="stage code-stage"><div class="code-win">
+<div class="code-dots"><i></i><i></i><i></i><span>javier.js</span></div>
+<pre><b>const</b> javier = {
   rol: <u>"Desarrollador Web"</u>,
   base: <u>"Madrid, España"</u>,
   estudia: <u>"DAW · ESIC University"</u>,
@@ -123,6 +137,8 @@ footer{padding:28px 0;text-align:center;color:var(--mut);font-size:13px;border-t
   disponible: <b>true</b>
 };
 // siempre aprendiendo algo nuevo</pre>
+<span class="code-badge">⚡ dev</span>
+</div></div>
 </div></section>
 
 <section id="sobre"><div class="wrap about">
@@ -189,10 +205,23 @@ function tick(){
 }
 addEventListener('scroll',tick,{passive:true});addEventListener('resize',tick);tick();
 // tilt 3D
-document.querySelectorAll('.stage').forEach(s=>{const m=s.querySelector('.mock');
-  s.addEventListener('pointermove',e=>{const b=s.getBoundingClientRect(),x=(e.clientX-b.left)/b.width-.5,y=(e.clientY-b.top)/b.height-.5;m.style.transform=`rotateY(${x*22}deg) rotateX(${-y*18}deg)`});
-  s.addEventListener('pointerleave',()=>m.style.transform='rotateY(-12deg) rotateX(6deg)');
-  m.style.transform='rotateY(-12deg) rotateX(6deg)';});
+document.querySelectorAll('.stage').forEach(s=>{
+  const m=s.querySelector('.mock, .code-win');
+  if(!m) return;
+  const isCode=m.classList.contains('code-win');
+  const baseRot=isCode?'rotateY(-10deg) rotateX(6deg)':'rotateY(-12deg) rotateX(6deg)';
+  s.addEventListener('pointermove',e=>{
+    if(reduce) return;
+    const b=s.getBoundingClientRect(),x=(e.clientX-b.left)/b.width-.5,y=(e.clientY-b.top)/b.height-.5;
+    m.style.animation='none';
+    m.style.transform=`rotateY(${x*24}deg) rotateX(${-y*20}deg) ${isCode?'translateZ(20px)':''}`;
+  });
+  s.addEventListener('pointerleave',()=>{
+    if(reduce) return;
+    m.style.transform=baseRot;
+    m.style.animation=isCode?'codeFl 6s ease-in-out infinite':'fl 6s ease-in-out infinite';
+  });
+});
 // reveal
 const io=new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting&&e.target.classList.add('on')),{threshold:.15});
 document.querySelectorAll('.rv').forEach(el=>io.observe(el));
