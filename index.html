@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Javier Antón · Desarrollador Web</title>
+<style>
+:root{--bg:#f6f5f0;--bg2:#ebeae2;--fg:#1b1d18;--mut:#5d6156;--ln:#d6d5cb;--ac:#6b7a3a;--ac2:#b8923a;--card:#fff;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0c0d0b;--bg2:#141611;--fg:#eef0e6;--mut:#9a9f8d;--ln:#272a21;--ac:#a9c05a;--ac2:#e0b45a;--card:#171912;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0c0d0b;--bg2:#141611;--fg:#eef0e6;--mut:#9a9f8d;--ln:#272a21;--ac:#a9c05a;--ac2:#e0b45a;--card:#171912;color-scheme:dark}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{background:var(--bg);color:var(--fg);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:60}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1100px;margin:auto;padding:0 24px}
+nav{position:fixed;top:0;left:0;right:0;z-index:50;padding-top:env(safe-area-inset-top,0px);background:color-mix(in srgb,var(--bg) 80%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--ln)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
+.logo{font-weight:800;letter-spacing:.08em}
+.logo span{color:var(--ac)}
+.links{display:flex;gap:22px;font-size:14px;color:var(--mut);align-items:center}
+.links a:hover{color:var(--fg)}
+#theme{background:none;border:1px solid var(--ln);color:var(--fg);border-radius:99px;width:34px;height:34px;cursor:pointer}
+@media(max-width:720px){.links a:not(#theme){display:none}}
+section{padding:110px 0}
+.eyebrow{font:600 12px/1 ui-monospace,monospace;letter-spacing:.2em;text-transform:uppercase;color:var(--ac);margin-bottom:14px}
+h2{font-size:clamp(30px,5vw,48px);line-height:1.1;letter-spacing:-.02em;margin-bottom:28px}
+/* hero */
+#hero{min-height:100vh;display:flex;align-items:center;padding-top:90px;position:relative;overflow:hidden}
+#hero::before{content:"";position:absolute;width:620px;height:620px;right:-160px;top:12%;background:radial-gradient(circle,var(--ac) 0,transparent 65%);opacity:.18;filter:blur(30px)}
+.hero-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:48px;align-items:center;position:relative}
+@media(max-width:860px){.hero-grid{grid-template-columns:1fr}}
+.badge{display:inline-flex;gap:8px;align-items:center;border:1px solid var(--ln);background:var(--bg2);border-radius:99px;padding:6px 14px;font-size:13px;color:var(--mut);margin-bottom:22px}
+.badge i{width:8px;height:8px;border-radius:50%;background:#4ade80;box-shadow:0 0 0 4px #4ade8033}
+h1{font-size:clamp(44px,8vw,92px);line-height:1;letter-spacing:-.04em}
+h1 em{font-style:normal;background:linear-gradient(90deg,var(--ac),var(--ac2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{font-size:clamp(17px,2vw,21px);color:var(--mut);max-width:560px;margin:24px 0 34px}
+.btn{display:inline-block;padding:13px 24px;border-radius:12px;font-weight:600;border:1px solid var(--ln);transition:.25s}
+.btn.p{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.btn:hover{transform:translateY(-3px)}
+.code{background:var(--card);border:1px solid var(--ln);border-radius:16px;padding:22px;font:13.5px/1.7 ui-monospace,Menlo,monospace;color:var(--mut);transform:perspective(900px) rotateY(-8deg) rotateX(4deg);box-shadow:0 30px 60px -30px #0006}
+.code b{color:var(--ac);font-weight:600}.code u{text-decoration:none;color:var(--ac2)}
+/* about + stack */
+.about{display:grid;grid-template-columns:1fr 1fr;gap:48px}
+@media(max-width:800px){.about{grid-template-columns:1fr}}
+.about p{color:var(--mut);margin-bottom:16px}
+.soft{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.chip{border:1px solid var(--ln);background:var(--bg2);border-radius:99px;padding:7px 15px;font-size:14px}
+.stack{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px}
+.tool{background:var(--card);border:1px solid var(--ln);border-radius:14px;padding:18px;transition:.3s}
+.tool:hover{transform:translateY(-5px);border-color:var(--ac)}
+.tool small{display:block;color:var(--mut);font-size:12px}
+/* projects: sticky + horizontal stacking */
+#work{height:400vh;position:relative;padding:0}
+.pin{position:sticky;top:0;height:100vh;height:100dvh;overflow:hidden;perspective:1600px;background:var(--bg2)}
+.pin-head{position:absolute;top:84px;left:0;right:0;z-index:30;pointer-events:none}
+.pin-head .wrap{display:flex;justify-content:space-between;align-items:flex-end}
+.pin-head h2{margin:0;font-size:clamp(24px,3.4vw,38px)}
+.count{font:600 14px ui-monospace,monospace;color:var(--mut)}
+.bar{position:absolute;left:0;bottom:0;height:3px;background:linear-gradient(90deg,var(--ac),var(--ac2));width:0;z-index:40}
+.card{position:absolute;inset:0;padding-top:150px;background:var(--bg);will-change:transform;transform-origin:left center;border-left:1px solid var(--ln);box-shadow:-40px 0 80px -30px #0008;display:flex;align-items:center}
+.card::before{content:"";position:absolute;inset:0;background:radial-gradient(70% 60% at 78% 50%,color-mix(in srgb,var(--a) 28%,transparent),transparent 70%)}
+.card .wrap{position:relative;display:grid;grid-template-columns:.9fr 1.1fr;gap:40px;align-items:center;width:100%}
+@media(max-width:860px){.card{padding-top:130px;align-items:flex-start}.card .wrap{grid-template-columns:1fr;gap:20px}}
+.num{font-size:clamp(70px,11vw,150px);font-weight:900;line-height:.85;color:transparent;-webkit-text-stroke:1.5px var(--a);opacity:.7}
+.card h3{font-size:clamp(28px,4vw,46px);letter-spacing:-.02em;margin:10px 0}
+.card p{color:var(--mut);max-width:440px;margin-bottom:18px}
+.tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+.tags span{font:12px ui-monospace,monospace;border:1px solid var(--a);color:var(--a);border-radius:6px;padding:4px 10px}
+.stage{perspective:1100px;display:grid;place-items:center}
+.mock{width:min(100%,520px);transform-style:preserve-3d;transition:transform .25s ease-out;animation:fl 6s ease-in-out infinite}
+@keyframes fl{50%{translate:0 -12px}}
+.win{background:var(--card);border:1px solid var(--ln);border-radius:14px;overflow:hidden;box-shadow:0 40px 80px -30px #000a,0 0 0 1px color-mix(in srgb,var(--a) 30%,transparent)}
+.dots{display:flex;gap:6px;padding:10px 12px;border-bottom:1px solid var(--ln)}
+.dots i{width:9px;height:9px;border-radius:50%;background:var(--ln)}
+.scr{aspect-ratio:16/10;padding:16px;display:grid;gap:10px;grid-template-rows:auto 1fr auto;background:linear-gradient(135deg,color-mix(in srgb,var(--a) 22%,var(--card)),var(--card))}
+.scr .h{height:12px;width:40%;border-radius:6px;background:var(--a)}
+.scr .m{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.scr .m b{border-radius:10px;background:color-mix(in srgb,var(--a) 16%,transparent);border:1px solid color-mix(in srgb,var(--a) 35%,transparent)}
+.scr .f{height:8px;width:65%;border-radius:4px;background:var(--ln)}
+.fl{position:absolute;padding:8px 14px;border-radius:10px;background:var(--a);color:#fff;font:600 13px ui-monospace,monospace;box-shadow:0 14px 30px -10px #0008}
+.fl.a{top:-14px;right:-10px;transform:translateZ(70px)}
+.fl.b{bottom:-14px;left:-10px;transform:translateZ(90px)}
+@media(max-width:860px){.fl.a{right:0}.fl.b{left:0}}
+/* timeline */
+.tl{display:grid;grid-template-columns:1fr 1fr;gap:48px}
+@media(max-width:800px){.tl{grid-template-columns:1fr}}
+.it{border-left:2px solid var(--ln);padding:0 0 26px 22px;position:relative}
+.it::before{content:"";position:absolute;left:-6px;top:6px;width:10px;height:10px;border-radius:50%;background:var(--ac)}
+.it small{font:12px ui-monospace,monospace;color:var(--ac)}
+.it h4{font-size:18px;margin:2px 0}.it p{color:var(--mut);font-size:15px}
+/* contact */
+#contacto{text-align:center;background:var(--bg2)}
+#contacto p{color:var(--mut);max-width:520px;margin:0 auto 30px}
+.ct{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:22px}
+footer{padding:28px 0;text-align:center;color:var(--mut);font-size:13px;border-top:1px solid var(--ln)}
+.rv{opacity:0;transform:translateY(28px);transition:.8s cubic-bezier(.2,.7,.2,1)}
+.rv.on{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.mock{animation:none}.rv{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<nav><div class="wrap"><a href="#hero" class="logo">JA<span>.</span></a>
+<div class="links"><a href="#sobre">Sobre mí</a><a href="#stack">Stack</a><a href="#proyectos">Proyectos</a><a href="#trayectoria">Trayectoria</a><a href="#contacto">Contacto</a><button id="theme" aria-label="Cambiar tema">◐</button></div></div></nav>
+
+<section id="hero"><div class="wrap hero-grid">
+<div>
+<span class="badge"><i></i>Disponible · incorporación inmediata</span>
+<h1>Hola, soy<br><em>Javier Antón</em></h1>
+<p class="lead">Desarrollador web en Madrid. Creo soluciones digitales funcionales que mejoran la experiencia de las personas.</p>
+<a class="btn p" href="#proyectos">Ver proyectos →</a> <a class="btn" href="#contacto">Hablemos</a>
+</div>
+<pre class="code"><b>const</b> javier = {
+  rol: <u>"Desarrollador Web"</u>,
+  base: <u>"Madrid, España"</u>,
+  estudia: <u>"DAW · ESIC University"</u>,
+  stack: [<u>"HTML"</u>,<u>"CSS"</u>,<u>"JS"</u>,
+          <u>"Python"</u>,<u>"Java"</u>],
+  idiomas: [<u>"ES nativo"</u>,<u>"EN medio"</u>],
+  disponible: <b>true</b>
+};
+// siempre aprendiendo algo nuevo</pre>
+</div></section>
+
+<section id="sobre"><div class="wrap about">
+<div class="rv"><div class="eyebrow">01 · Sobre mí</div><h2>Del mundo de las personas al del código.</h2></div>
+<div class="rv"><p>Estudiante de segundo curso de Desarrollo de Aplicaciones Web. Me define el compromiso, la ética profesional y el trabajo en equipo: disfruto resolviendo problemas técnicos y aportando al crecimiento del equipo.</p>
+<p>Vengo de Recursos Humanos, así que sé liderar, comunicar y entender a las personas detrás de cada producto. En mis prácticas en Medinas Management diseñé y mantuve bases de datos y hablé directamente con clientes.</p>
+<div class="soft"><span class="chip">🧠 Resolución de problemas</span><span class="chip">🤝 Trabajo en equipo</span><span class="chip">🧭 Liderazgo</span><span class="chip">🎯 Determinación</span></div></div>
+</div></section>
+
+<section id="stack" style="background:var(--bg2)"><div class="wrap">
+<div class="eyebrow">02 · Stack</div><h2 class="rv">Con lo que construyo cada día.</h2>
+<div class="stack rv">
+<div class="tool">HTML5<small>Lenguaje</small></div><div class="tool">CSS3<small>Lenguaje</small></div><div class="tool">JavaScript<small>Lenguaje</small></div><div class="tool">Python<small>Lenguaje</small></div><div class="tool">Java<small>Lenguaje</small></div><div class="tool">Bases de datos<small>Diseño y mantenimiento</small></div><div class="tool">Docker<small>Herramienta</small></div><div class="tool">VS Code<small>Editor</small></div><div class="tool">IntelliJ IDEA<small>IDE</small></div><div class="tool">PyCharm<small>IDE</small></div><div class="tool">Azure AZ-900<small>Certificación</small></div>
+</div></div></section>
+
+<div id="proyectos"></div>
+<section id="work"><div class="pin">
+<div class="pin-head"><div class="wrap"><div><div class="eyebrow" style="margin:0 0 6px">03 · Proyectos</div><h2>Lo que he construido</h2></div><div class="count" id="cnt">01 / 04</div></div></div>
+
+<article class="card" style="--a:#3f9d5a"><div class="wrap"><div><div class="num">01</div><h3>Javama</h3><p>Sitio web profesional para una empresa de jardinería, mantenimiento y paisajismo.</p><div class="tags"><span>HTML</span><span>CSS</span><span>JS</span></div><a class="btn p" href="https://jardineriajavama.vercel.app/" target="_blank" rel="noopener">Ver proyecto →</a></div>
+<div class="stage"><div class="mock"><div class="win"><div class="dots"><i></i><i></i><i></i></div><div class="scr"><div class="h"></div><div class="m"><b></b><b></b><b></b></div><div class="f"></div></div></div><span class="fl a">Web</span><span class="fl b">Responsive</span></div></div></div></article>
+
+<article class="card" style="--a:#3b82c4"><div class="wrap"><div><div class="num">02</div><h3>Francisco Coca</h3><p>Sitio web profesional en PHP para la presentación de servicios.</p><div class="tags"><span>PHP</span><span>HTML</span><span>CSS</span></div><a class="btn p" href="https://github.com/javiantonc" target="_blank" rel="noopener">Ver en GitHub →</a></div>
+<div class="stage"><div class="mock"><div class="win"><div class="dots"><i></i><i></i><i></i></div><div class="scr"><div class="h"></div><div class="m"><b></b><b></b><b></b></div><div class="f"></div></div></div><span class="fl a">PHP</span><span class="fl b">Servicios</span></div></div></div></article>
+
+<article class="card" style="--a:#c98a2b"><div class="wrap"><div><div class="num">03</div><h3>Herramienta Facturas</h3><p>Aplicación web para gestionar y generar facturas de forma sencilla y eficiente.</p><div class="tags"><span>Web</span><span>Herramienta</span></div><a class="btn p" href="https://herramienta-facturas.vercel.app/" target="_blank" rel="noopener">Ver proyecto →</a></div>
+<div class="stage"><div class="mock"><div class="win"><div class="dots"><i></i><i></i><i></i></div><div class="scr"><div class="h"></div><div class="m"><b></b><b></b><b></b></div><div class="f"></div></div></div><span class="fl a">Facturas</span><span class="fl b">PDF</span></div></div></div></article>
+
+<article class="card" style="--a:#c2477a"><div class="wrap"><div><div class="num">04</div><h3>Nosotros</h3><p>Web app y PWA para organizarse en pareja: tareas, calendario, notas y planes compartidos.</p><div class="tags"><span>PWA</span><span>Web App</span><span>JS</span></div><a class="btn p" href="https://nosotros-peach.vercel.app/" target="_blank" rel="noopener">Ver proyecto →</a></div>
+<div class="stage"><div class="mock"><div class="win"><div class="dots"><i></i><i></i><i></i></div><div class="scr"><div class="h"></div><div class="m"><b></b><b></b><b></b></div><div class="f"></div></div></div><span class="fl a">PWA</span><span class="fl b">Instalable</span></div></div></div></article>
+<div class="bar" id="bar"></div>
+</div></section>
+
+<section id="trayectoria"><div class="wrap"><div class="eyebrow">04 · Trayectoria</div><h2 class="rv">Formación y experiencia.</h2>
+<div class="tl rv"><div>
+<div class="it"><small>SEP 2025 – ACTUALIDAD</small><h4>CFGS Desarrollo de Aplicaciones Web</h4><p>ESIC University · 2.º curso</p></div>
+<div class="it"><small>SEP 2022 – JUN 2025</small><h4>Doble Grado en Relaciones Laborales y RR. HH.</h4><p>UNIR – Universidad Internacional de La Rioja</p></div>
+<div class="it"><small>COMPLEMENTARIA</small><h4>Azure AZ-900 · Automatización</h4><p>Microsoft Azure Fundamentals y curso de automatización.</p></div></div>
+<div>
+<div class="it"><small>ABR 2026 – JUN 2026</small><h4>Desarrollador Web (prácticas) · Medinas Management</h4><p>Diseño y creación de bases de datos, mantenimiento de datos y comunicación con clientes.</p></div>
+<div class="it"><small>MAY 2024 – MAY 2025</small><h4>Reclutador · ARSEM Servicios Energéticos</h4><p>Fuentes de reclutamiento, criba de CV, preselección y coordinación de entrevistas.</p></div></div></div>
+</div></section>
+
+<section id="contacto"><div class="wrap"><div class="eyebrow">05 · Contacto</div><h2 class="rv">¿Construimos algo juntos?</h2>
+<p>Busco incorporarme a un equipo de desarrollo donde aportar desde el primer día. Te respondo en menos de 24 h.</p>
+<a class="btn p" href="mailto:javieranton1717@gmail.com">javieranton1717@gmail.com</a>
+<div class="ct"><a class="btn" href="tel:+34606084122">606 084 122</a><a class="btn" href="https://wa.me/34606084122" target="_blank" rel="noopener">WhatsApp</a><a class="btn" href="https://linkedin.com/in/javierantoncoca" target="_blank" rel="noopener">LinkedIn</a><a class="btn" href="https://github.com/javiantonc" target="_blank" rel="noopener">GitHub</a></div>
+</div></section>
+<footer>© 2026 Javier Antón · Madrid, España</footer>
+
+<script>
+const $=s=>document.querySelector(s),cards=[...document.querySelectorAll('.card')],work=$('#work'),clamp=(v,a,b)=>Math.min(Math.max(v,a),b);
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+function tick(){
+  const r=work.getBoundingClientRect(),tot=work.offsetHeight-innerHeight,t=clamp(-r.top/tot,0,1),p=t*(cards.length-1);
+  cards.forEach((c,i)=>{
+    const enter=i?clamp(i-p,0,1):0,k=clamp(p-i,0,1);
+    c.style.zIndex=i+1;
+    c.style.transform=`translate3d(${enter*104}%,0,0) scale(${1-.08*k}) rotateY(${reduce?0:-k*14}deg)`;
+    c.style.filter=`brightness(${1-.55*k})`;
+  });
+  $('#bar').style.width=t*100+'%';
+  $('#cnt').textContent=String(Math.round(p)+1).padStart(2,'0')+' / 0'+cards.length;
+}
+addEventListener('scroll',tick,{passive:true});addEventListener('resize',tick);tick();
+// tilt 3D
+document.querySelectorAll('.stage').forEach(s=>{const m=s.querySelector('.mock');
+  s.addEventListener('pointermove',e=>{const b=s.getBoundingClientRect(),x=(e.clientX-b.left)/b.width-.5,y=(e.clientY-b.top)/b.height-.5;m.style.transform=`rotateY(${x*22}deg) rotateX(${-y*18}deg)`});
+  s.addEventListener('pointerleave',()=>m.style.transform='rotateY(-12deg) rotateX(6deg)');
+  m.style.transform='rotateY(-12deg) rotateX(6deg)';});
+// reveal
+const io=new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting&&e.target.classList.add('on')),{threshold:.15});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+// theme
+$('#theme').onclick=()=>{const d=document.documentElement,dark=d.dataset.theme?d.dataset.theme==='dark':matchMedia('(prefers-color-scheme: dark)').matches;d.dataset.theme=dark?'light':'dark'};
+</script>
+</body>
+</html>
